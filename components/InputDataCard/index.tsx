@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { playerContext } from "hooks/playerContext";
 import Draggable from "react-draggable";
-import {TextInput, SelectInput} from "components/Inputs";
+import {TextInput, SelectInput, SourceInput} from "components/Inputs";
 
 const DataCard = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -20,11 +20,17 @@ const DataCard = () => {
         ) : (
           <div className="items-center justify-center w-96 bg-white p-6 rounded-lg border-2 border-gray-50 shadow-white shadow-sm">
             <div id="settings" className="flex flex-col">
-              <SelectInput options={["a", "b", "c"]}/>
-              <TextInput />
-              <TextInput />
-              <label>Style</label>
-              <input type="select" id="style" />
+              {
+                playerSettings.sources.map((source, index) => (
+                  <SourceInput
+                    key={index}
+                    index={index}
+                    source={source}
+                    setSource={updateSource}
+                    lable={"input src " + index}
+                  />
+              ))}
+
             </div>
           </div>
         )}

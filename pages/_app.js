@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import "styles/globals.css";
+import { PlayerContextProvider } from "hooks/playerContext";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <PlayerContextProvider>
+      <Component {...pageProps} />
+    </PlayerContextProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

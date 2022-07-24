@@ -1,25 +1,32 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { Isource, TUpdateSource, EsrcLables } from "hooks/playerContext";
 interface Iinput {
   value: string;
-  lable: string;
-  placeholder: string;
+  lable: string | null;
+  placeholder: string | null;
   setValue: (value: string) => void;
 }
 
 interface IselectInput extends Iinput {
-  options: string[];
+  options: EsrcLables[];
+  setValue: (option: EsrcLables) => void;
+}
+
+interface IsrcInput extends Iinput {
+  source: Isource;
+  setSource: TUpdateSource;
+  index: number;
 }
 
 export const SelectInput = ({
   value,
-  lable,
+  lable = null,
   options,
   setValue,
 }: IselectInput): JSX.Element => (
   <>
     {lable && <label>{lable}</label>}
-    <div className="bg-white rounded-sm border flex items-center px-4 py-1 cursor-pointer">
+    <div className="bg-white rounded-sm border flex items-center px-4 py-1 cursor-pointer w-full">
       <select
         className="bg-transparent border-none w-full focus:outline-none"
         placeholder="Search"
@@ -36,30 +43,66 @@ export const SelectInput = ({
   </>
 );
 
-export const TextInput = () => {
-  const [value, setValue] = React.useState("");
+export const TextInput = ({
+  lable = null,
+  value,
+  setValue,
+  placeholder = null,
+}: Iinput): JSX.Element => (
+  <>
+    {lable && <label>{lable}</label>}
+    <div className="bg-white rounded-sm border flex items-center px-4 py-1 cursor-pointer">
+      <input
+        className="bg-transparent border-none w-full focus:outline-none"
+        placeholder={placeholder && placeholder}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </div>
+  </>
+);
+
+export const SourceInput = ({ lable, source, setSource, index }: IsrcInput) => {
+  const [srcType, setSrcType] = React.useState(source.type);
+  const [src, setSrc] = React.useState(source.src);
+
+  React.useEffect(() => {
+    console.log({
+      srcType,
+      src,
+    });
+    setSource(
+      {
+        type: srcType,
+        src: src,
+      },
+      index
+    );
+  }, [srcType, src]);
 
   return (
     <>
-      <label>Input source 1</label>
-      <div className="bg-white rounded-sm border flex items-center px-4 py-1 cursor-pointer">
-        <input
-          className="bg-transparent border-none w-full focus:outline-none"
-          placeholder="Search"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+      {lable && <label>{lable}</label>}
+
+      <div className="flex flex-row">
+        <div className="flex w-full">
+          <TextInput
+            value={src}
+            setValue={setSrc}
+            lable={null}
+            placeholder={"full video src"}
+          />
+        </div>
+        <div className="flex w-1/3">
+          <SelectInput
+            lable={null}
+            placeholder={null}
+            value={srcType}
+            setValue={setSrcType}
+            options={[EsrcLables.HLS, EsrcLables.MP4]}
+          />
+        </div>
       </div>
     </>
   );
 };
-
-// const SourceInput = () => {
-//   const [value, setValue] = React.useState("");
-//   const [src, setSrc] = React.useState("");
-
-//   return (
-//     <>
-//       <label>Input source 2</label>
-//       <div className="bg-white rounded-sm border flex items-center px-4 py-1 cursor-pointer">
-//         <TextInput />
