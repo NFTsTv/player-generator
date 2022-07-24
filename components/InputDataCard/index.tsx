@@ -2,6 +2,9 @@ import React, {useContext} from "react";
 import { playerContext } from "hooks/playerContext";
 import Draggable from "react-draggable";
 import {TextInput, SelectInput, SourceInput} from "components/Inputs";
+import ButtonRow from "components/ButtonRow";
+import LogoRow from "components/LogoRow";
+
 
 const DataCard = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -18,8 +21,8 @@ const DataCard = () => {
             Lets go!
           </div>
         ) : (
-          <div className="items-center justify-center w-96 bg-white p-6 rounded-lg border-2 border-gray-50 shadow-white shadow-sm">
-            <div id="settings" className="flex flex-col">
+          <div className="items-center justify-center  w-96 bg-white p-3 rounded-lg border-2 border-gray-50 shadow-white shadow-sm">
+            <div id="settings" className="flex flex-col space-y-6">
               {
                 playerSettings.sources.map((source, index) => (
                   <SourceInput
@@ -30,7 +33,9 @@ const DataCard = () => {
                     lable={"input src " + index}
                   />
               ))}
-
+              <TextInput placeholder="poster image" lable="poster" value={playerSettings.poster} setValue={updatePoster} />
+              <ButtonRow />
+              <LogoRow />
             </div>
           </div>
         )}

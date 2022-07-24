@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Isource, TUpdateSource, EsrcLables } from "hooks/playerContext";
+import { Isource, TUpdateSource, EsrcLables } from "types/playerTypes";
 interface Iinput {
   value: string;
   lable: string | null;
@@ -49,7 +49,7 @@ export const TextInput = ({
   setValue,
   placeholder = null,
 }: Iinput): JSX.Element => (
-  <>
+  <div>
     {lable && <label>{lable}</label>}
     <div className="bg-white rounded-sm border flex items-center px-4 py-1 cursor-pointer">
       <input
@@ -59,7 +59,7 @@ export const TextInput = ({
         onChange={(e) => setValue(e.target.value)}
       />
     </div>
-  </>
+  </div>
 );
 
 export const SourceInput = ({ lable, source, setSource, index }: IsrcInput) => {
@@ -81,7 +81,7 @@ export const SourceInput = ({ lable, source, setSource, index }: IsrcInput) => {
   }, [srcType, src]);
 
   return (
-    <>
+    <div>
       {lable && <label>{lable}</label>}
 
       <div className="flex flex-row">
@@ -103,6 +103,6 @@ export const SourceInput = ({ lable, source, setSource, index }: IsrcInput) => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };

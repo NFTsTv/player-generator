@@ -1,14 +1,14 @@
 import { useState, useRef } from 'react'
 import VideoJS from './VideoJS'
-
+import {pla} from "hooks/playerContext";
 interface PlayerProps {
-  src: string | null
+  sources: Isource;
   poster: string
   setStatus?: (status: string) => void
   onStreamError: () => void
 }
 
-const Player = ({ src, poster, onStreamError }: PlayerProps) => {
+const Player = ({ sources, poster, onStreamError }: PlayerProps) => {
   // if (!src) return <img width={'100%'} src={poster ?? '/posters/default.png'} alt="poster" />
 
   const playerRef = useRef(null)
@@ -17,12 +17,7 @@ const Player = ({ src, poster, onStreamError }: PlayerProps) => {
     autoplay: true,
     controls: true,
     responsive: true,
-    sources: [
-      {
-        src: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-        type: 'application/x-mpegURL',
-      },
-    ],
+    sources: [...sources],
   }
 
   const handlePlayerReady = (player: any) => {
