@@ -29,4 +29,24 @@ export interface IplayerContext {
   playerSettings: IplayerSettings;
   updateSource: TUpdateSource;
   updatePoster: TupdatePoster;
+  streamState: EState
+  setActiveIndex: (index: number) => void;
+  setStreamState: React.Dispatch<EAction>
+  activeIndex: number | undefined,
+  validSources: Isource[],
+  setValidSources: React.Dispatch<React.SetStateAction<Isource[]>>
+}
+
+export enum EState {
+  IDLE = "IDLE",
+  ACTIVE = "ACTIVE",
+  ERROR = "ERROR",
+  POLLING = "POLLING",
+}
+
+export enum EAction {
+  TO_ACTIVE = "TO_ACTIVE",
+  TO_IDLE = "TO_IDLE",
+  TO_ERROR = "TO_ERROR",
+  TO_POLLING = "TO_POLLING",
 }

@@ -5,19 +5,66 @@ import {
   EsrcTypes,
   TUpdateSource,
   TupdatePoster,
-} from "types/playerTypes"
+  EAction,
+  EState,
+  Isource,
+} from "types/playerTypes";
 
 const playerContext = React.createContext<IplayerContext>(null);
 
+const switchState = (currentState: EState, action: EAction) => {
+  switch (currentState) {
+    case EState.IDLE:
+      switch (action) {
+        case EAction.TO_ACTIVE:
+          return EState.ACTIVE;
+        case EAction.TO_ERROR:
+          return EState.ERROR;
+      }
+    case EState.ACTIVE:
+      switch (action) {
+        case EAction.TO_IDLE:
+          return EState.IDLE;
+        case EAction.TO_ERROR:
+          return EState.ERROR;
+      }
+    case EState.ERROR:
+      switch (action) {
+        case EAction.TO_IDLE:
+          return EState.IDLE;
+      }
+    case EState.POLLING:
+      switch (action) {
+        case EAction.TO_ACTIVE:
+          return EState.ACTIVE;
+        case EAction.TO_IDLE:
+          return EState.IDLE;
+        case EAction.TO_ERROR:
+          return EState.ERROR;
+        case EAction.TO_POLLING:
+          return EState.POLLING;
+      }
+  }
+};
+
 const PlayerContextProvider = ({ children }) => {
+  const [activeIndex, setActiveIndex] = React.useState<number | undefined>(
+    undefined
+  );
+  const [streamState, setStreamState] = React.useReducer(
+    switchState,
+    EState.IDLE
+  );
   const [playerSettings, setPlayerSettings] =
     React.useState<IplayerSettings | null>({
       sources: [
-        { src: "", type: EsrcTypes.HLS },
-        { src: "", type: EsrcTypes.HLS },
+        { src: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8", type: EsrcTypes.HLS },
+        { src: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", type: EsrcTypes.HLS },
       ],
       poster: "",
     });
+
+  const [validSources, setValidSources] = React.useState<Isource[]>([]);
 
   const updateSource: TUpdateSource = (source, index) => {
     const newSources = [...playerSettings.sources];
@@ -36,6 +83,12 @@ const PlayerContextProvider = ({ children }) => {
     playerSettings,
     updateSource,
     updatePoster,
+    streamState,
+    setActiveIndex,
+    setStreamState,
+    activeIndex,
+    validSources,
+    setValidSources,
   };
 
   return (

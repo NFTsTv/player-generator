@@ -39,8 +39,9 @@ export const VideoJS = (props: any) => {
       ))
     } else {
       const player = playerRef.current
-
+      if (player.src() !== options.sources) {
        player.src(options.sources)
+      }
     }
   }, [options, videoRef])
 
