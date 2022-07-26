@@ -40,10 +40,7 @@ export const VideoJS = (props: any) => {
     } else {
       const player = playerRef.current
 
-      //prevent player from reloading the same src, causing interrupted playback
-      if (player.src() !== options.sources[0].src) {
        player.src(options.sources)
-      }
     }
   }, [options, videoRef])
 
