@@ -9,7 +9,7 @@ interface PlayerProps {
 
 const Player = ({ source, poster }: PlayerProps) => {
   // if (!src) return <img width={'100%'} src={poster ?? '/posters/default.png'} alt="poster" />
-
+  console.log(source)
   const playerRef = useRef(null);
   const videoJsOptions = {
     poster: poster || "",
@@ -32,7 +32,7 @@ const Player = ({ source, poster }: PlayerProps) => {
     });
 
     player.on("error", (e: any) => {
-      console.log("error", e);
+      console.log("error", player.error());
     });
 
     player.on("waiting", () => {

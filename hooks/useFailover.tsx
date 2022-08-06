@@ -20,20 +20,24 @@ const useFailover = (
   setStreamState: (state: EAction) => void
 ) => {
   const [validSources, setValidSources] = React.useState<Isource[]>([]);
-  const [activeIndex, setActiveIndex] = React.useState<number | null>(
-    undefined
-  );
-
+  const [activeSource, setActiveSource] = React.useState<Isource | null>(null);
 
   React.useEffect(() => {
     // validate sources
     validateSources().then((validSources) => {
       setValidSources(validSources);
-      if (validSources.length > 0) {
-        setActiveIndex(0);
-      }
     });
   }, []);
+
+  React.useEffect(() => {
+    if (validSources.length > 0) {
+      setActiveSource(validSources[0]);
+      setStreamState(EAction.TO_ACTIVE);
+    } else {
+      setStreamState(EAction.TO_ERROR);
+      setActiveSource(null);
+    }
+  }, [validSources]);
 
   const validateSources = async () => {
     const validSources = sources
@@ -45,36 +49,24 @@ const useFailover = (
           return source;
         }
       });
-    return validSources
+    return validSources;
   };
 
   const pollSources = () => {};
 
-  const failover = () => {
-    // return whatever is active and not activeIndex
-    // if (streamState === EState.ACTIVE) {
-    //setStreamState(EAction.TO_POLLING);
-    validSources.forEach((source, index) => {
-      setActiveIndex(index);
-      setStreamState(EAction.TO_ACTIVE);
-      return;
-    });
-  };
-
   const error = () => {
     setStreamState(EAction.TO_ERROR);
     // remove current source from validSources and failover to the next one
-    failover();
     const newValidSources = validSources.filter(
-      (source, index) => index !== activeIndex
+      (source) => source.src !== activeSource.src
     );
+    console.log(newValidSources);
     setValidSources([...newValidSources]);
   };
 
   return {
-    failover,
     error,
-    activeSource: validSources[activeIndex],
+    activeSource,
   };
 };
 

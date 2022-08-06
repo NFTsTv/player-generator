@@ -7,17 +7,17 @@ export default function Home() {
   const { playerSettings, streamState, setStreamState } =
     React.useContext(playerContext);
   const { sources, poster } = playerSettings;
-  const { activeSource, failover, error } = useFailover(
+  const { activeSource, error } = useFailover(
     sources,
     streamState,
     setStreamState
   );
 
-  console.log("activeSOurce", activeSource);
   return (
     <div className="flex flex-row bg:black justify-center h-screen w-screen">
-      <DataCard failover={failover} error={error} />
+      <DataCard error={error} />
       <Player source={activeSource} poster={poster} />
+      <p className="red">{streamState}</p>
     </div>
   );
 }

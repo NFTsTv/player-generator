@@ -5,7 +5,7 @@ import { TextInput, SelectInput, SourceInput } from "components/Inputs";
 import ButtonRow from "components/ButtonRow";
 import LogoRow from "components/LogoRow";
 
-const DataCard = ({failover, error}) => {
+const DataCard = ({ error }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { playerSettings, updateSource, updatePoster } =
     useContext(playerContext);
@@ -33,11 +33,15 @@ const DataCard = ({failover, error}) => {
                   value={playerSettings.poster}
                   setValue={updatePoster}
                 />
-                <ButtonRow failover={failover} error={error} />
+                <ButtonRow error={error} />
               </>
             )}
             <>
-              <LogoRow onClick={()=> {setIsOpen(true)}} />
+              <LogoRow
+                onClick={() => {
+                  setIsOpen(true);
+                }}
+              />
             </>
           </div>
         </div>

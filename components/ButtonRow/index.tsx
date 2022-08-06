@@ -24,7 +24,6 @@ const playSrc2 = () => {
   // }
 };
 
-
 const CustomButton = ({ text, onClick }: { text: string; onClick: any }) => (
   <div
     role="CustomButton"
@@ -36,14 +35,11 @@ const CustomButton = ({ text, onClick }: { text: string; onClick: any }) => (
 );
 
 // TODO
-const ButtonRow = ({failover, error}) => {
-
+const ButtonRow = ({  error }) => {
   return (
     <div className="flex flex-row space-x-1">
-      <CustomButton onClick={failover} text="Failover" />
       <CustomButton onClick={generateIframeString} text="Get Iframe" />
-      <CustomButton onClick={error} text="Src 1" />
-      <CustomButton onClick={playSrc2} text="Src 2" />
+      <CustomButton onClick={error} text="Failover" />
     </div>
   );
 };
