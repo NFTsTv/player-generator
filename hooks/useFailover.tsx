@@ -27,7 +27,7 @@ const useFailover = (
     validateSources().then((validSources) => {
       setValidSources(validSources);
     });
-  }, []);
+  }, [sources]);
 
   React.useEffect(() => {
     if (validSources.length > 0) {

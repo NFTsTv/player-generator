@@ -1,23 +1,23 @@
-import { useRef, useEffect } from 'react'
-import videojs from 'video.js'
-import 'video.js/dist/video-js.css'
+import { useRef, useEffect } from "react";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 // import 'videojs-mux'
 // import 'videojs-youtube'
 
 // TODO: Need to change types
 export const VideoJS = (props: any) => {
-  const videoRef = useRef(null)
-  const playerRef = useRef<videojs.Player | null>(null)
-  const { options, onReady } = props
+  const videoRef = useRef(null);
+  const playerRef = useRef<videojs.Player | null>(null);
+  const { options, onReady } = props;
 
   useEffect(() => {
     // make sure Video.js player is only initialized once
-    if (!playerRef.current) {
-      const videoElement = videoRef.current
-      if (!videoElement) return
+    if (!playerRef.current && options.sources) {
+      const videoElement = videoRef.current;
+      if (!videoElement) return;
       // videojs.registerPlugin('hlsQualitySelector', qualitySelector)
       // videojs.registerPlugin('qualityLevels', contribQualityLevels)
-      const initTime = Date.now()
+      const initTime = Date.now();
       const player = (playerRef.current = videojs(
         videoElement,
         {
@@ -28,40 +28,48 @@ export const VideoJS = (props: any) => {
               customTagParsers: [
                 {
                   expression: /#EXT-X-ERROR/,
-                  customType: 'livepeerError',
+                  customType: "livepeerError",
                 },
               ],
             },
           },
         },
         () => {
-          onReady && onReady(player)
+          onReady && onReady(player);
         }
-      ))
+      ));
     } else {
-      const player = playerRef.current
-      if (player.src() !== options.sources) {
-       player.src(options.sources)
+      if (playerRef.current) {
+        const player = playerRef.current;
+        if (player.src() !== options.sources) {
+          player.src(options.sources);
+        }
+      }
+      if (!options.sources) {
+        playerRef.current?.dispose();
+        playerRef.current = null;
       }
     }
-  }, [ options, videoRef])
+  }, [options, videoRef]);
 
-  // useEffect(() => {
-  //   const player = playerRef.current
-  //   // if (player) player.hlsQualitySelector({ displayCurrentQuality: true })
-  //   // return () => {
-  //   //   if (player) {
-  //   //     player.dispose()
-  //   //     playerRef.current = null
-  //   //   }
-  //   // }
-  // }, [playerRef])
+  useEffect(() => {
+    const player = playerRef.current
+    if (player) player.hlsQualitySelector({ displayCurrentQuality: true })
+    return () => {
+      if (player) {
+        playerRef.current?.dispose();
+        playerRef.current = null;
+      }
+    }
+  }, [playerRef])
+
+  if (!options.sources) return null;
 
   return (
     <div data-vjs-player style={{ height: "100%", width: "100%" }}>
       <video ref={videoRef} className="video-js vjs-big-play-centered" />
     </div>
-  )
-}
+  );
+};
 
-export default VideoJS
+export default VideoJS;

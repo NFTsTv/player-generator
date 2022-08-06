@@ -16,20 +16,11 @@ const Player = ({ source, poster }: PlayerProps) => {
     autoplay: true,
     controls: true,
     responsive: true,
-    sources: [source],
+    sources: source ? [source] : null,
   };
 
   const handlePlayerReady = (player: any) => {
     playerRef.current = player;
-
-    player.reloadSourceOnError({
-      // getSource allows you to override the source object used when an error occurs
-      getSource: function (reload: any) {
-        console.log("Reloading because of an error");
-        // onStreamError() // this should automatically trigger player reload
-      },
-      errorInterval: 1,
-    });
 
     player.on("error", (e: any) => {
       console.log("error", player.error());
