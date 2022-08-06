@@ -13,6 +13,7 @@ export interface IplayerContext {
   updateSource: TUpdateSource;
   updatePoster: TupdatePoster;
   streamState: EState;
+  setStreamState: React.Dispatch<EAction>;
 }
 
 export enum EsrcLables {

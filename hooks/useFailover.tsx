@@ -14,25 +14,28 @@ const pingUrl = (url: string) => {
     .catch(() => false);
 };
 
-const useFailover = ({
-  sources,
-  streamState,
-  setStreamState,
-}: {
-  sources: Isource[];
-  streamState: EState;
-  setStreamState: (state: EAction) => void;
-}) => {
+const useFailover = (
+  sources: Isource[],
+  streamState: EState,
+  setStreamState: (state: EAction) => void
+) => {
   const [validSources, setValidSources] = React.useState<Isource[]>([]);
-  const [activeIndex, setActiveIndex] = React.useState<number | null>(undefined);
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(
+    undefined
+  );
+
 
   React.useEffect(() => {
     // validate sources
-    console.log("validating sources");
-    validateSources();
-  }, [sources, streamState]);
+    validateSources().then((validSources) => {
+      setValidSources(validSources);
+      if (validSources.length > 0) {
+        setActiveIndex(0);
+      }
+    });
+  }, []);
 
-  const validateSources = () => {
+  const validateSources = async () => {
     const validSources = sources
       .filter((source) => validateUrl(source.src))
       .map((source, index) => {
@@ -42,24 +45,23 @@ const useFailover = ({
           return source;
         }
       });
-    setValidSources(validSources);
+    return validSources
   };
 
   const pollSources = () => {};
 
-
   const failover = () => {
     // return whatever is active and not activeIndex
     // if (streamState === EState.ACTIVE) {
-      //setStreamState(EAction.TO_POLLING);
-      validSources.forEach((source, index) => {
-              setActiveIndex(index);
-              setStreamState(EAction.TO_ACTIVE);
-              return;
-            });
-        }
+    //setStreamState(EAction.TO_POLLING);
+    validSources.forEach((source, index) => {
+      setActiveIndex(index);
+      setStreamState(EAction.TO_ACTIVE);
+      return;
+    });
+  };
 
-        const error = () => {
+  const error = () => {
     setStreamState(EAction.TO_ERROR);
     // remove current source from validSources and failover to the next one
     failover();
@@ -72,7 +74,7 @@ const useFailover = ({
   return {
     failover,
     error,
-    validSource: validSources[activeIndex],
+    activeSource: validSources[activeIndex],
   };
 };
 

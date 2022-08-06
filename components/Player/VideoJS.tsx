@@ -9,6 +9,7 @@ export const VideoJS = (props: any) => {
   const videoRef = useRef(null)
   const playerRef = useRef<videojs.Player | null>(null)
   const { options, onReady } = props
+
   useEffect(() => {
     // make sure Video.js player is only initialized once
     if (!playerRef.current) {
@@ -39,22 +40,23 @@ export const VideoJS = (props: any) => {
       ))
     } else {
       const player = playerRef.current
+      console.log(player.src(), options.sources)
       if (player.src() !== options.sources) {
        player.src(options.sources)
       }
     }
-  }, [options, videoRef])
+  }, [ options, videoRef])
 
-  useEffect(() => {
-    const player = playerRef.current
-    // if (player) player.hlsQualitySelector({ displayCurrentQuality: true })
-    // return () => {
-    //   if (player) {
-    //     player.dispose()
-    //     playerRef.current = null
-    //   }
-    // }
-  }, [playerRef])
+  // useEffect(() => {
+  //   const player = playerRef.current
+  //   // if (player) player.hlsQualitySelector({ displayCurrentQuality: true })
+  //   // return () => {
+  //   //   if (player) {
+  //   //     player.dispose()
+  //   //     playerRef.current = null
+  //   //   }
+  //   // }
+  // }, [playerRef])
 
   return (
     <div data-vjs-player style={{ height: "100%", width: "100%" }}>

@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import VideoJS from "./VideoJS";
-import { ISource } from "types/playerTypes";
+import { Isource } from "types/playerTypes";
 interface PlayerProps {
-  source: ISource;
+  source: Isource;
   poster: string;
   setStatus?: (status: string) => void;
 }
@@ -43,7 +43,6 @@ const Player = ({ source, poster }: PlayerProps) => {
       }
     });
   };
-
   return <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />;
 };
 

@@ -69,10 +69,7 @@ export const SourceInput = ({ lable, source, setSource, index }: IsrcInput) => {
   const [src, setSrc] = React.useState(source.src);
 
   React.useEffect(() => {
-    console.log({
-      srcType,
-      src,
-    });
+
     setSource(
       {
         type: srcType,
