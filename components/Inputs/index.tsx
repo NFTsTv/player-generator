@@ -12,7 +12,9 @@ interface IselectInput extends Iinput {
   setValue: (option: EsrcLables) => void;
 }
 
-interface IsrcInput extends Iinput {
+interface IsrcInput {
+  lable: string | null;
+  placeholder: string | null;
   source: Isource;
   setSource: TUpdateSource;
   index: number;
@@ -31,7 +33,7 @@ export const SelectInput = ({
         className="bg-transparent border-none w-full focus:outline-none"
         placeholder="Search"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        disabled
       >
         {options.map((option) => (
           <option key={option} value={option}>

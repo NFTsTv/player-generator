@@ -21,7 +21,7 @@ const Docs = () => (
   </svg>
 );
 
-const LogoRow = () => {
+const LogoRow = ({ onClick }) => {
   return (
     <div className="flex flex-row">
       {/* { github logo  } */}
@@ -30,7 +30,9 @@ const LogoRow = () => {
           <GitHub />
         </a>
       </div>
-      {/* { docs logo } */}
+      <div onClick={onClick} className="flex items-center">
+        Open
+      </div>
       <div className="flex items-center ml-auto">
         <a href="dwa" className="text-gray-600">
           <Docs />

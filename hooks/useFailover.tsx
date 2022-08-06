@@ -1,6 +1,5 @@
 import React from "react";
-import { IplayerSettings, Isource, EState, EAction } from "types/playerTypes";
-import { playerContext } from "./playerContext";
+import { Isource, EState, EAction } from "types/playerTypes";
 
 const validateUrl = (url: string) => {
   const urlRegex =
@@ -15,68 +14,66 @@ const pingUrl = (url: string) => {
     .catch(() => false);
 };
 
-const useFailover = ({ sources }: IplayerSettings) => {
-  const {
-    activeIndex,
-    setActiveIndex,
-    streamState,
-    setStreamState,
-    validSources,
-    setValidSources,
-  } = React.useContext(playerContext);
+const useFailover = ({
+  sources,
+  streamState,
+  setStreamState,
+}: {
+  sources: Isource[];
+  streamState: EState;
+  setStreamState: (state: EAction) => void;
+}) => {
+  const [validSources, setValidSources] = React.useState<Isource[]>([]);
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(undefined);
 
   React.useEffect(() => {
     // validate sources
-    const validSources = sources.filter((source) => validateUrl(source.src));
-    console.log(validSources);
-    setValidSources(validSources);
-  }, [sources]);
+    console.log("validating sources");
+    validateSources();
+  }, [sources, streamState]);
 
-  React.useEffect(() => {
-    console.log(streamState, activeIndex);
-  }, [streamState, activeIndex]);
-
-  React.useEffect(() => {
-    // start polling
-    console.log(streamState);
-    if (streamState === EState.IDLE) {
-      //gsetStreamState(EAction.TO_POLLING);
-      // for each source, ping it and if it's valid, set it as the active source
-      validSources.forEach((source, index) => {
-        pingUrl(source.src).then((isValid) => {
-          if (isValid) {
-            setActiveIndex(index);
-            setStreamState(EAction.TO_ACTIVE);
-            return;
-          }
-        });
+  const validateSources = () => {
+    const validSources = sources
+      .filter((source) => validateUrl(source.src))
+      .map((source, index) => {
+        // ping source to see if it exists
+        const sourceExists = pingUrl(source.src);
+        if (sourceExists) {
+          return source;
+        }
       });
-    }
-  }, [validSources]);
+    setValidSources(validSources);
+  };
+
+  const pollSources = () => {};
+
 
   const failover = () => {
     // return whatever is active and not activeIndex
     // if (streamState === EState.ACTIVE) {
       //setStreamState(EAction.TO_POLLING);
       validSources.forEach((source, index) => {
-        console.log(source.src, index, activeIndex);
-        if (index !== activeIndex) {
-          pingUrl(source.src).then((isValid) => {
-            if (isValid) {
               setActiveIndex(index);
               setStreamState(EAction.TO_ACTIVE);
               return;
-            }
-          });
+            });
         }
-      });
-    // }
+
+        const error = () => {
+    setStreamState(EAction.TO_ERROR);
+    // remove current source from validSources and failover to the next one
+    failover();
+    const newValidSources = validSources.filter(
+      (source, index) => index !== activeIndex
+    );
+    setValidSources([...newValidSources]);
   };
 
   return {
-    streamState,
     failover,
-    activeSource: validSources[activeIndex],
+    error,
+    validSource: validSources[activeIndex],
   };
 };
+
 export default useFailover;

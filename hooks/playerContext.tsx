@@ -1,13 +1,13 @@
 import React from "react";
+import useFailover from "./useFailover";
 import {
   IplayerContext,
   IplayerSettings,
-  EsrcTypes,
   TUpdateSource,
   TupdatePoster,
   EAction,
+  EsrcTypes,
   EState,
-  Isource,
 } from "types/playerTypes";
 
 const playerContext = React.createContext<IplayerContext>(null);
@@ -48,23 +48,27 @@ const switchState = (currentState: EState, action: EAction) => {
 };
 
 const PlayerContextProvider = ({ children }) => {
-  const [activeIndex, setActiveIndex] = React.useState<number | undefined>(
-    undefined
-  );
+
   const [streamState, setStreamState] = React.useReducer(
     switchState,
     EState.IDLE
   );
+
   const [playerSettings, setPlayerSettings] =
     React.useState<IplayerSettings | null>({
       sources: [
-        { src: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8", type: EsrcTypes.HLS },
-        { src: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", type: EsrcTypes.HLS },
+        {
+          src: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
+          type: EsrcTypes.HLS,
+        },
+        {
+          src: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+          type: EsrcTypes.HLS,
+        },
       ],
       poster: "",
     });
 
-  const [validSources, setValidSources] = React.useState<Isource[]>([]);
 
   const updateSource: TUpdateSource = (source, index) => {
     const newSources = [...playerSettings.sources];
@@ -84,11 +88,6 @@ const PlayerContextProvider = ({ children }) => {
     updateSource,
     updatePoster,
     streamState,
-    setActiveIndex,
-    setStreamState,
-    activeIndex,
-    validSources,
-    setValidSources,
   };
 
   return (
