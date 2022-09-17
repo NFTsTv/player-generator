@@ -14,6 +14,7 @@ export interface IplayerContext {
   updatePoster: TupdatePoster;
   streamState: EState;
   setStreamState: React.Dispatch<EAction>;
+  setPlayerSettings: React.Dispatch<IplayerSettings>;
 }
 
 export enum EsrcLables {

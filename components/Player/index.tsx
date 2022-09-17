@@ -5,9 +5,10 @@ interface PlayerProps {
   source: Isource;
   poster: string;
   setStatus?: (status: string) => void;
+  onError: () => void;
 }
 
-const Player = ({ source, poster }: PlayerProps) => {
+const Player = ({ source, poster, onError }: PlayerProps) => {
   // if (!src) return <img width={'100%'} src={poster ?? '/posters/default.png'} alt="poster" />
   console.log(source)
   const playerRef = useRef(null);
@@ -24,6 +25,7 @@ const Player = ({ source, poster }: PlayerProps) => {
 
     player.on("error", (e: any) => {
       console.log("error", player.error());
+      onError();
     });
 
     player.on("waiting", () => {

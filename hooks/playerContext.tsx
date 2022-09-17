@@ -88,7 +88,8 @@ const PlayerContextProvider = ({ children }) => {
     updateSource,
     updatePoster,
     streamState,
-    setStreamState
+    setStreamState,
+    setPlayerSettings
   };
 
   return (
