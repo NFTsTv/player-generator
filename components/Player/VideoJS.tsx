@@ -63,7 +63,7 @@ export const VideoJS = (props: any) => {
     }
   }, [playerRef])
 
-  if (!options.sources) return null;
+  if (!options.sources) return <img width={'100%'} src={props.options.poster ?? '/posters/default.png'} alt="poster" />;
 
   return (
     <div data-vjs-player style={{ height: "100%", width: "100%" }}>

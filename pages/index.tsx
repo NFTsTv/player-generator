@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="flex flex-row bg:black justify-center h-screen w-screen">
       <DataCard error={error} />
-      <Player source={activeSource} poster={poster} onError={error} />
+      <Player source={activeSource} poster={poster} onError={error}/>
       <p className="red">{streamState}</p>
     </div>
   );

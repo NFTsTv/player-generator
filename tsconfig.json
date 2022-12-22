@@ -7,7 +7,7 @@
       "esnext"
     ],
     "baseUrl": ".",
-    "moduleResolution":"node",
+    "moduleResolution": "node",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
