@@ -15,7 +15,6 @@ export default function Iframe() {
     playerSettings,
     streamState,
     setStreamState,
-    updateSource,
     setPlayerSettings,
   } = React.useContext(playerContext);
   const { sources, poster } = playerSettings;
