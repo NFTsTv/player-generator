@@ -16,7 +16,7 @@ const useLivepeer = (streamId: string) => {
   const { data: sessions } = useStreamSessions({
     streamId,
   });
-
+ 
   const { data: session } = useStreamSession(
     currentStreamSession ? currentStreamSession : ""
   );
