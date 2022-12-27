@@ -50,7 +50,7 @@ const useLivepeer = (streamId: string) => {
         type: EsrcTypes.HLS,
       });
     }
-  }, [stream, currentStreamSession]);
+  }, [stream, session]);
   console.log(activeSource);
 
   return {
