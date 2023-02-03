@@ -33,7 +33,7 @@ export default function Iframe() {
             poster={poster as string}
             autoPlay
           />
-          {!stream.isActive && <Chat chatId={streamid as string} />}
+          {stream.isActive && <Chat chatId={streamid as string} />}
         </>
       ) : (
         <>
