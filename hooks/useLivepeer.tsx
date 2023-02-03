@@ -46,7 +46,6 @@ const useLivepeer = (streamId: string) => {
     }
   }, [stream, session]);
 
-  console.log(session)
   return {
     stream,
     activeSource,

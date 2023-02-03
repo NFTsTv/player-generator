@@ -16,21 +16,21 @@ const Chat = ({ chatId }: { chatId: string }) => {
   }
 
   return (
-    <>
+    <div className="absolute right-0 w-96 z-30 h-screen">
       <div
-        className="absolute top-0 right-0 p-2 z-40 rounded bg-opacity-80 bg-blue-900 text-white m-4 cursor-pointer w-16 text-center"
+        className="absolute top-0 left-0 p-2 z-40 rounded bg-opacity-80 bg-blue-900 text-white m-4 cursor-pointer w-16 text-center"
         onClick={() => setShowChat(false)}
       >
         Close
       </div>
       <iframe
-        className="absolute right-0 w-96 h-screen z-30 bg-zinc-800 bg-opacity-80"
-        src={`https://stingray-app-u9f8x.ondigitalocean.app/${chatId}`}
+        className=" w-full h-full   bg-zinc-800 bg-opacity-80"
+        src={`http://localhost:3001/${chatId}`}
         width="100%"
         height="100%"
         frameBorder="0"
       />
-    </>
+    </div>
   );
 };
 
