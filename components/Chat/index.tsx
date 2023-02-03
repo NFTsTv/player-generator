@@ -25,7 +25,7 @@ const Chat = ({ chatId }: { chatId: string }) => {
       </div>
       <iframe
         className=" w-full h-full   bg-zinc-800 bg-opacity-80"
-        src={`http://localhost:3001/${chatId}`}
+        src={`https://stingray-app-u9f8x.ondigitalocean.app/${chatId}`}
         width="100%"
         height="100%"
         frameBorder="0"
