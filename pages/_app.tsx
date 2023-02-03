@@ -7,8 +7,9 @@ import {
 } from "@livepeer/react";
 
 function MyApp({ Component, pageProps }) {
+  console.log(process.env.NEXT_PUBLIC_LIVEPEER_API_KEY)
   const client = createReactClient({
-    provider: studioProvider({ apiKey: process.env.NEXT_PUBLIC_LIVEPEER_API }),
+    provider: studioProvider({ apiKey: process.env.NEXT_PUBLIC_LIVEPEER_API_KEY }),
     storage: {
       getItem: (key, defaultState) => {
         return defaultState;

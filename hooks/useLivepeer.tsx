@@ -43,18 +43,15 @@ const useLivepeer = (streamId: string) => {
         src: stream.playbackUrl,
         type: EsrcTypes.HLS,
       });
-    } else if (session?.recordingStatus == "ready") {
-      setActiveSource({
-        ...activeSource,
-        src: session.recordingUrl,
-        type: EsrcTypes.HLS,
-      });
     }
   }, [stream, session]);
-  console.log(activeSource);
 
+  console.log(session)
   return {
+    stream,
     activeSource,
+    setActiveSource,
+    session
   };
 };
 
