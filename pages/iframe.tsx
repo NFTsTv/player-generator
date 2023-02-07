@@ -24,7 +24,7 @@ export default function Iframe() {
 
   return (
     <div className="flex flex-col md:flex-row bg:black justify-center h-screen w-screen">
-      {activeSource ? (
+      {!activeSource ? (
         <>
           <LivepeerPlayer
             objectFit="cover"
@@ -32,10 +32,10 @@ export default function Iframe() {
             poster={poster as string}
             autoPlay
           />
-          {stream.isActive && <Chat chatId={streamid as string} />}
+          {<Chat chatId={streamid as string} />}
         </>
       ) : (
-        <>
+        <div className="flex flex-col items-center justify-center">
           <OfflineView />
           <button
             className="absolute bottom-1/2 mt-5 p-2 z-30 rounded bg-opacity-80 bg-blue-900 text-white m-4 cursor-pointer text-center w-64"
@@ -48,7 +48,7 @@ export default function Iframe() {
           >
             View latest stream
           </button>
-        </>
+        </div>
       )}
     </div>
   );
