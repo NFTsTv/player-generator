@@ -11,12 +11,13 @@ const useLivepeer = (streamId: string) => {
   const [activeSource, setActiveSource] = React.useState<Isource | null>(null);
   const { data: stream } = useStream({
     streamId,
+    refetchInterval: (stream) => (!stream?.isActive ? 5000 : false),
   });
 
   const { data: sessions } = useStreamSessions({
     streamId,
   });
- 
+
   const { data: session } = useStreamSession(
     currentStreamSession ? currentStreamSession : ""
   );
@@ -50,7 +51,7 @@ const useLivepeer = (streamId: string) => {
     stream,
     activeSource,
     setActiveSource,
-    session
+    session,
   };
 };
 

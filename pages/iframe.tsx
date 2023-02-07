@@ -1,5 +1,4 @@
 import React from "react";
-import Player from "components/Player";
 import { Isource, EsrcTypes } from "types/playerTypes";
 import { Player as LivepeerPlayer } from "@livepeer/react";
 import { useRouter } from "next/router";
