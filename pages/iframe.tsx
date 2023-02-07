@@ -24,7 +24,7 @@ export default function Iframe() {
 
   return (
     <div className="flex flex-col md:flex-row bg:black justify-center h-screen w-screen">
-      {!activeSource ? (
+      {activeSource ? (
         <>
           <LivepeerPlayer
             objectFit="cover"
