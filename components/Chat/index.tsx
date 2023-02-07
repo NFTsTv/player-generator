@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const Chat = ({ chatId }: { chatId: string }) => {
   const [showChat, setShowChat] = React.useState(false);
 
