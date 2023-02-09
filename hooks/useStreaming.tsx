@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect , useMemo} from "react";
 import {
   useStream,
   useStreamSessions,
   useStreamSession,
 } from "@livepeer/react";
 
-const useLivepeer = (livepeerId: string) => {
+const useStreaming = (livepeerId: string) => {
   const [activeSource, setActiveSource] = useState<string | null>(null);
   const [playBackRecording, setPlayBackRecording] = useState<boolean>(false);
 
   const { data: stream } = useStream({
     streamId: livepeerId,
-    refetchInterval: (stream) => (!playBackRecording && !stream?.isActive ? 5000 : false),
+    refetchInterval: (stream) => (!stream?.isActive ? 5000 : false),
   });
 
   const { data: sessions } = useStreamSessions({
@@ -39,10 +39,10 @@ const useLivepeer = (livepeerId: string) => {
     }
   }, [stream]);
 
-  return {
+  // return with useMemo  
+  return useMemo(() => ({
     activeSource,
     setPlayBackRecording,
-  };
-};
+  }), [activeSource, setPlayBackRecording]);
 
-export default useLivepeer;
+};

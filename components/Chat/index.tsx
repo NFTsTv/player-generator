@@ -17,10 +17,10 @@ const Chat = ({ chatId }: { chatId: string }) => {
   return (
     <div className="absolute right-0 w-96 z-30 h-screen">
       <div
-        className="absolute top-0 left-0 p-2 z-40 rounded bg-opacity-80 bg-blue-900 text-white m-4 cursor-pointer w-16 text-center"
+        className="absolute top-0 left-0 z-40 rounded-full bg-opacity-80 text-black m-4 cursor-pointer text-center "
         onClick={() => setShowChat(false)}
       >
-        Close
+        X
       </div>
       <iframe
         className=" w-full h-full   bg-zinc-800 bg-opacity-80"
