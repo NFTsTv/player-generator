@@ -17,7 +17,7 @@ const Chat = ({ chatId }: { chatId: string }) => {
   return (
     <div className="absolute right-0 w-96 z-30 h-screen">
       <div
-        className="absolute top-0 left-0 z-40 rounded-full bg-opacity-80 text-black m-4 cursor-pointer text-center "
+        className="absolute top-0 left-0 z-40 rounded-full bg-opacity-80 text-white m-4 cursor-pointer text-center "
         onClick={() => setShowChat(false)}
       >
         X
