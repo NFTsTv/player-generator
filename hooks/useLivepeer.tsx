@@ -11,7 +11,7 @@ const useLivepeer = (livepeerId: string) => {
 
   const { data: stream } = useStream({
     streamId: livepeerId,
-    refetchInterval: (stream) => (!playBackRecording && !stream?.isActive ? 5000 : false),
+    refetchInterval: (stream) => (!stream?.isActive ? 5000 : false),
   });
 
   const { data: sessions } = useStreamSessions({
@@ -41,6 +41,7 @@ const useLivepeer = (livepeerId: string) => {
 
   return {
     activeSource,
+    sessions,
     setPlayBackRecording,
   };
 };
