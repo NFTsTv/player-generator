@@ -10,8 +10,6 @@ import {
 
 function MyApp({ Component, pageProps }) {
 
- const noStorage = 
-
 
   console.log(process.env.NEXT_PUBLIC_LIVEPEER_API_KEY);
   const client = createReactClient({
