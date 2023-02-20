@@ -4,21 +4,19 @@ import {
   LivepeerConfig,
   createReactClient,
   studioProvider,
+  noopStorage,
+  createStorage,
 } from "@livepeer/react";
 
 function MyApp({ Component, pageProps }) {
-  console.log(process.env.NEXT_PUBLIC_LIVEPEER_API_KEY)
+  console.log(process.env.NEXT_PUBLIC_LIVEPEER_API_KEY);
   const client = createReactClient({
-    provider: studioProvider({ apiKey: process.env.NEXT_PUBLIC_LIVEPEER_API_KEY }),
-    storage: {
-      getItem: (key, defaultState) => {
-        return defaultState;
-      },
-      setItem: (key, defaultState) => {
-        return defaultState;
-      },
-      removeItem: (key) => {},
-    },
+    provider: studioProvider({
+      apiKey: process.env.NEXT_PUBLIC_LIVEPEER_API_KEY,
+    }),
+    storage: createStorage({
+      storage: noopStorage,
+    }),
   });
 
   return (
