@@ -67,7 +67,7 @@ export default function Iframe() {
 
   return (
     <div className="flex flex-col md:flex-row bg:black justify-center h-screen w-screen">
-      <Player autoPlay src={activeSource} poster={poster as string} />
+      <Player objectFit="contain"  autoPlay src={activeSource} poster={poster as string} />
       <Chat chatId={streamid as string} />
     </div>
   );
