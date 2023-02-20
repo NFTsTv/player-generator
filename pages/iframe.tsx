@@ -57,7 +57,6 @@ export default function Iframe() {
   return (
     <div className="flex flex-col md:flex-row bg:black justify-center h-screen w-screen">
       <Player
-        objectFit="cover"
         autoPlay
         src={stream.playbackUrl}
         poster={poster as string}
