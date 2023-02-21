@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@livepeer/react": "^2.2.0",
+    "@livepeer/react": "2.2.4-next.1",
     "autoprefixer": "^10.4.12",
     "axios": "^0.27.2",
     "init": "^0.1.2",

@@ -11,7 +11,6 @@ import {
 function MyApp({ Component, pageProps }) {
 
 
-  console.log(process.env.NEXT_PUBLIC_LIVEPEER_API_KEY);
   const client = createReactClient({
     provider: studioProvider({
       apiKey: process.env.NEXT_PUBLIC_LIVEPEER_API_KEY,
