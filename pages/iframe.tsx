@@ -12,7 +12,7 @@ import {
 export default function Iframe() {
   const router = useRouter();
   const { query } = router;
-  const { streamid, poster } = query;
+  const { streamid, poster, chat } = query;
   // const [activeSource, setActiveSource] = useState<string | null>(null);
   // const [playBackRecording, setPlayBackRecording] = useState<boolean>(false);
 
@@ -61,7 +61,7 @@ export default function Iframe() {
         src={stream.playbackUrl}
         poster={poster as string}
       />
-      <Chat chatId={streamid as string} />
+      {!chat ? <Chat chatId={streamid as string} /> : null}
     </div>
   );
 }
